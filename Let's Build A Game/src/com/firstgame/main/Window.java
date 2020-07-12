@@ -5,6 +5,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+//this is the class that creates the window that the game runs in.
+
 public class Window extends Canvas{
 
 	/**
