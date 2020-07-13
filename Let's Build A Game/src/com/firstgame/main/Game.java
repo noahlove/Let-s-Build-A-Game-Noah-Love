@@ -1,17 +1,20 @@
 package com.firstgame.main;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 
 //this class is the main class that runs the game
 
 public class Game extends Canvas implements Runnable{
 	
-
 	private static final long serialVersionUID = -6494256809522819072L;
 
 	public static final int WIDTH = 1920, HEIGHT = 1200;
-	private boolean running = false; //defaults to not running
+	
 	private Thread thread;  //create a thread to use
+	private boolean running = false; //defaults to not running
 	
 	
 	public Game() {
@@ -21,9 +24,10 @@ public class Game extends Canvas implements Runnable{
 	public synchronized void start() {
 		thread = new Thread(this); //this is a new instance of the thread
 		thread.start(); //start the thread
+		running = true;
 	}
 	
-	public synchronized void stop() {
+	public synchronized void stop(){
 		try {
 			thread.join();
 			running = false;
@@ -77,6 +81,31 @@ public class Game extends Canvas implements Runnable{
 		stop();					
 	}
 	
+
+	
+	private void tick() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void render() {
+		BufferStrategy bs = this.getBufferStrategy();
+		if(bs == null) {
+			this.createBufferStrategy(3); //how many buffers it creates
+			return;
+		}
+		
+		Graphics g = bs.getDrawGraphics();
+		
+		g.setColor(Color.black);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		g.dispose();
+		bs.show();
+	}
+
+
+
 	public static void main(String args[]) {
 		new Game();
 	}
